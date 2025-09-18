@@ -2,8 +2,6 @@
 
 # Script de Anonimização de Dados PII - ExpertAI
 # Executa anonimização de dados sensíveis no banco SQLite
-# Autor: ExpertAI Team
-# Data: $(date +"%Y-%m-%d")
 
 set -euo pipefail
 

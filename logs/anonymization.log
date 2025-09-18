@@ -231,3 +231,21 @@
 [2025-09-17 22:04:45] [INFO] Limpando logs antigos...
 [2025-09-17 22:04:45] [INFO] Limpeza de logs concluída
 [2025-09-17 22:04:45] [INFO] === Processo de anonimização concluído ===
+[2025-09-17 22:26:28] [INFO] === Iniciando processo de anonimização PII ===
+[2025-09-17 22:26:28] [INFO] Banco de dados: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/scripts/../database/users.db
+[2025-09-17 22:26:28] [INFO] Data/Hora: Wed Sep 17 22:26:28 -03 2025
+[2025-09-17 22:26:28] [INFO] Banco de dados encontrado e SQLite disponível
+[2025-09-17 22:26:28] [INFO] Criando backup do banco de dados...
+[2025-09-17 22:26:28] [INFO] Backup criado com sucesso: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/scripts/../database/backups/users_backup_20250917_222628.db
+[2025-09-17 22:26:28] [INFO] Backups antigos removidos (mantendo últimos 10)
+[2025-09-17 22:26:28] [INFO] Iniciando processo de anonimização...
+[2025-09-17 22:26:28] [INFO] Encontrados 2 registros para anonimizar
+[2025-09-17 22:26:28] [INFO] Anonimização concluída: 2 registros processados
+[2025-09-17 22:26:28] [INFO] Verificando integridade da anonimização...
+[2025-09-17 22:26:28] [INFO] ✅ Verificação OK: Todos os 5 registros foram anonimizados
+[2025-09-17 22:26:28] [INFO] ✅ Nenhum CPF duplicado encontrado
+[2025-09-17 22:26:28] [INFO] Reiniciando API para aplicar mudanças...
+[2025-09-17 22:26:28] [INFO] ✅ API reiniciada com sucesso
+[2025-09-17 22:26:28] [INFO] Limpando logs antigos...
+[2025-09-17 22:26:28] [INFO] Limpeza de logs concluída
+[2025-09-17 22:26:28] [INFO] === Processo de anonimização concluído ===

@@ -1,31 +1,28 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const fs = require('fs');
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
+const fs = require("fs");
 
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, '../database/users.db');
+const DB_PATH =
+  process.env.DB_PATH || path.join(__dirname, "../database/users.db");
 
-// Garantir que o diretório existe
 const dbDir = path.dirname(DB_PATH);
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
-// Criar conexão com o banco
 const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
-    console.error('❌ Erro ao conectar com SQLite:', err.message);
+    console.error("❌ Erro ao conectar com SQLite:", err.message);
   } else {
-    console.log('✅ Conectado ao banco SQLite em:', DB_PATH);
+    console.log("✅ Conectado ao banco SQLite em:", DB_PATH);
   }
 });
 
-// Configurar WAL mode para melhor performance
-db.exec('PRAGMA journal_mode = WAL;');
-db.exec('PRAGMA synchronous = NORMAL;');
-db.exec('PRAGMA cache_size = 1000;');
-db.exec('PRAGMA foreign_keys = ON;');
+db.exec("PRAGMA journal_mode = WAL;");
+db.exec("PRAGMA synchronous = NORMAL;");
+db.exec("PRAGMA cache_size = 1000;");
+db.exec("PRAGMA foreign_keys = ON;");
 
-// Inicializar tabelas
 const initDatabase = () => {
   const createUsersTable = `
     CREATE TABLE IF NOT EXISTS users (
@@ -49,26 +46,24 @@ const initDatabase = () => {
 
   db.exec(createUsersTable, (err) => {
     if (err) {
-      console.error('❌ Erro ao criar tabela users:', err.message);
+      console.error("❌ Erro ao criar tabela users:", err.message);
     } else {
-      console.log('✅ Tabela users verificada/criada');
-      
-      // Criar índices
+      console.log("✅ Tabela users verificada/criada");
+
       db.exec(createIndexes, (err) => {
         if (err) {
-          console.error('❌ Erro ao criar índices:', err.message);
+          console.error("❌ Erro ao criar índices:", err.message);
         } else {
-          console.log('✅ Índices verificados/criados');
+          console.log("✅ Índices verificados/criados");
         }
       });
     }
   });
 };
 
-// Função para executar queries com Promise
 const runQuery = (sql, params = []) => {
   return new Promise((resolve, reject) => {
-    db.run(sql, params, function(err) {
+    db.run(sql, params, function (err) {
       if (err) {
         reject(err);
       } else {
@@ -78,7 +73,6 @@ const runQuery = (sql, params = []) => {
   });
 };
 
-// Função para buscar dados com Promise
 const getQuery = (sql, params = []) => {
   return new Promise((resolve, reject) => {
     db.get(sql, params, (err, row) => {
@@ -91,7 +85,6 @@ const getQuery = (sql, params = []) => {
   });
 };
 
-// Função para buscar múltiplos registros
 const allQuery = (sql, params = []) => {
   return new Promise((resolve, reject) => {
     db.all(sql, params, (err, rows) => {
@@ -104,14 +97,13 @@ const allQuery = (sql, params = []) => {
   });
 };
 
-// Função para fechar conexão
 const closeDatabase = () => {
   return new Promise((resolve, reject) => {
     db.close((err) => {
       if (err) {
         reject(err);
       } else {
-        console.log('✅ Conexão SQLite fechada');
+        console.log("✅ Conexão SQLite fechada");
         resolve();
       }
     });
@@ -125,5 +117,5 @@ module.exports = {
   getQuery,
   allQuery,
   closeDatabase,
-  DB_PATH
+  DB_PATH,
 };
