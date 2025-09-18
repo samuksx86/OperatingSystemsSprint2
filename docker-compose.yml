@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # Aplicação Node.js
+  api:
+    build: ./api
+    container_name: expertai_api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DB_PATH=/app/database/users.db
+    volumes:
+      - ./database:/app/database
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    networks:
+      - expertai_network
+
+  # Container para gerenciar SQLite
+  database:
+    image: alpine:latest
+    container_name: expertai_database
+    restart: unless-stopped
+    volumes:
+      - ./database:/data
+    command: |
+      sh -c "
+        apk add --no-cache sqlite &&
+        if [ ! -f /data/users.db ]; then
+          sqlite3 /data/users.db 'CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            full_name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            cpf TEXT,
+            rg TEXT,
+            phone TEXT,
+            address TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          );'
+        fi &&
+        tail -f /dev/null
+      "
+    networks:
+      - expertai_network
+
+  # NGINX como reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: expertai_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites-available:/etc/nginx/conf.d
+    depends_on:
+      - api
+    networks:
+      - expertai_network
+
+networks:
+  expertai_network:
+    driver: bridge
+
+volumes:
+  database_volume:
+    driver: local
