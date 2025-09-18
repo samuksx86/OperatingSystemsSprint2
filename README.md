@@ -339,27 +339,3 @@ curl -X PUT http://localhost/api/users/1 \
 # Deletar usuário
 curl -X DELETE http://localhost/api/users/1
 ```
-
-## 🎯 Próximos Passos
-
-### Para Produção
-
-1. **SSL/TLS**: Configurar certificados HTTPS
-2. **Firewall**: Configurar iptables/ufw
-3. **Monitoring**: Implementar logs centralizados
-4. **Backup**: Configurar backup remoto automático
-5. **Scaling**: Configurar load balancer se necessário
-
-### Localização dos Logs
-
-- **Anonimização**: `logs/anonymization.log`
-- **Cronjob**: `logs/cron.log`
-- **API**: `docker-compose logs api`
-- **NGINX**: `docker-compose logs nginx`
-
-### Configurações Importantes
-
-- **Database**: `database/users.db` (SQLite WAL mode)
-- **Backups**: `database/backups/` (últimos 10 mantidos)
-- **Scripts**: `scripts/` (todos executáveis)
-- **Docker**: `docker-compose.yml` (configuração completa)
