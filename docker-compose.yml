@@ -1,7 +1,6 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  # Aplicação Node.js
   api:
     build: ./api
     container_name: expertai_api
@@ -9,8 +8,10 @@ services:
     environment:
       - NODE_ENV=production
       - DB_PATH=/app/database/users.db
+      - LOG_DIR=/var/log
     volumes:
       - ./database:/app/database
+      - ./logs:/var/log
     ports:
       - "3000:3000"
     depends_on:
@@ -18,7 +19,6 @@ services:
     networks:
       - expertai_network
 
-  # Container para gerenciar SQLite
   database:
     image: alpine:latest
     container_name: expertai_database
@@ -46,7 +46,6 @@ services:
     networks:
       - expertai_network
 
-  # NGINX como reverse proxy
   nginx:
     image: nginx:alpine
     container_name: expertai_nginx

@@ -249,3 +249,47 @@
 [2025-09-17 22:26:28] [INFO] Limpando logs antigos...
 [2025-09-17 22:26:28] [INFO] Limpeza de logs concluída
 [2025-09-17 22:26:28] [INFO] === Processo de anonimização concluído ===
+[2025-10-20 19:29:23] [INFO] === Iniciando processo de anonimização PII ===
+[2025-10-20 19:29:23] [INFO] Banco de dados: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/OperatingSystemsSprint2/scripts/../database/users.db
+[2025-10-20 19:29:23] [INFO] Data/Hora: Mon Oct 20 19:29:23 -03 2025
+[2025-10-20 19:29:23] [INFO] Banco de dados encontrado e SQLite disponível
+[2025-10-20 19:29:23] [INFO] Criando backup do banco de dados...
+[2025-10-20 19:29:23] [INFO] Backup criado com sucesso: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/OperatingSystemsSprint2/scripts/../database/backups/users_backup_20251020_192923.db
+[2025-10-20 19:29:23] [INFO] Backups antigos removidos (mantendo últimos 10)
+[2025-10-20 19:29:23] [INFO] Iniciando processo de anonimização...
+[2025-10-20 19:29:23] [INFO] Encontrados 2 registros para anonimizar
+[2025-10-20 19:32:37] [INFO] === Iniciando processo de anonimização PII ===
+[2025-10-20 19:32:37] [INFO] Banco de dados: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/OperatingSystemsSprint2/scripts/../database/users.db
+[2025-10-20 19:32:37] [INFO] Data/Hora: Mon Oct 20 19:32:37 -03 2025
+[2025-10-20 19:32:37] [INFO] Banco de dados encontrado e SQLite disponível
+[2025-10-20 19:32:37] [INFO] Criando backup do banco de dados...
+[2025-10-20 19:32:37] [INFO] Backup criado com sucesso: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/OperatingSystemsSprint2/scripts/../database/backups/users_backup_20251020_193237.db
+[2025-10-20 19:32:37] [INFO] Backups antigos removidos (mantendo últimos 10)
+[2025-10-20 19:32:37] [INFO] Iniciando processo de anonimização...
+[2025-10-20 19:32:37] [INFO] Nenhum registro não-anonimizado encontrado
+[2025-10-20 19:32:37] [INFO] Verificando integridade da anonimização...
+[2025-10-20 19:32:37] [INFO] ✅ Verificação OK: Todos os 2 registros foram anonimizados
+[2025-10-20 19:32:37] [INFO] ✅ Nenhum CPF duplicado encontrado
+[2025-10-20 19:32:37] [INFO] Reiniciando API para aplicar mudanças...
+[2025-10-20 19:32:37] [INFO] ✅ API reiniciada com sucesso
+[2025-10-20 19:32:37] [INFO] Limpando logs antigos...
+[2025-10-20 19:32:37] [INFO] Limpeza de logs concluída
+[2025-10-20 19:32:37] [INFO] === Processo de anonimização concluído ===
+[2025-10-20 19:39:43] [INFO] === Iniciando processo de anonimização PII ===
+[2025-10-20 19:39:43] [INFO] Banco de dados: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/OperatingSystemsSprint2/scripts/../database/users.db
+[2025-10-20 19:39:43] [INFO] Data/Hora: Mon Oct 20 19:39:43 -03 2025
+[2025-10-20 19:39:43] [INFO] Banco de dados encontrado e SQLite disponível
+[2025-10-20 19:39:43] [INFO] Criando backup do banco de dados...
+[2025-10-20 19:39:43] [INFO] Backup criado com sucesso: /Users/samuelramosdealmeida/Documents/Projects/ExpertAI/OperatingSystemsSprint2/scripts/../database/backups/users_backup_20251020_193943.db
+[2025-10-20 19:39:43] [INFO] Backups antigos removidos (mantendo últimos 10)
+[2025-10-20 19:39:43] [INFO] Iniciando processo de anonimização...
+[2025-10-20 19:39:43] [INFO] Encontrados 2 registros para anonimizar
+[2025-10-20 19:39:43] [INFO] Anonimização concluída: 2 registros processados
+[2025-10-20 19:39:43] [INFO] Verificando integridade da anonimização...
+[2025-10-20 19:39:43] [INFO] ✅ Verificação OK: Todos os 2 registros foram anonimizados
+[2025-10-20 19:39:43] [INFO] ✅ Nenhum CPF duplicado encontrado
+[2025-10-20 19:39:43] [INFO] Reiniciando API para aplicar mudanças...
+[2025-10-20 19:39:43] [INFO] ✅ API reiniciada com sucesso
+[2025-10-20 19:39:43] [INFO] Limpando logs antigos...
+[2025-10-20 19:39:43] [INFO] Limpeza de logs concluída
+[2025-10-20 19:39:43] [INFO] === Processo de anonimização concluído ===

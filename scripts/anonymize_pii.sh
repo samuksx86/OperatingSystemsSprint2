@@ -11,17 +11,58 @@ DB_PATH="${SCRIPT_DIR}/../database/users.db"
 LOG_FILE="${SCRIPT_DIR}/../logs/anonymization.log"
 BACKUP_DIR="${SCRIPT_DIR}/../database/backups"
 DATE_STAMP=$(date +"%Y%m%d_%H%M%S")
+API_URL="${API_URL:-http://localhost:3000}"
+SCRIPT_USER="$(whoami)"
 
 # Criar diretórios necessários
 mkdir -p "$(dirname "$LOG_FILE")"
 mkdir -p "$BACKUP_DIR"
 
-# Função de logging
+# Função de logging local
 log() {
     local level="$1"
     local message="$2"
     local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
     echo "[$timestamp] [$level] $message" | tee -a "$LOG_FILE"
+}
+
+# Função para enviar log para a API
+send_log_to_api() {
+    local log_type="$1"  # "access" ou "operation"
+    local data="$2"
+
+    # Tentar enviar para API, mas não falhar se não conseguir
+    if command -v curl &> /dev/null; then
+        curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -d "$data" \
+            "${API_URL}/api/logs/${log_type}" \
+            >/dev/null 2>&1 || true
+    fi
+}
+
+# Função para registrar operação via API
+log_operation() {
+    local operation="$1"
+    local status="$2"
+    local details="${3:-}"
+    local records_affected="${4:-0}"
+    local duration_ms="${5:-0}"
+
+    local json_data=$(cat <<EOF
+{
+  "user": "${SCRIPT_USER}",
+  "operation": "${operation}",
+  "target": "users.db",
+  "status": "${status}",
+  "duration_ms": ${duration_ms},
+  "records_affected": ${records_affected},
+  "details": "${details}"
+}
+EOF
+)
+
+    send_log_to_api "operation" "$json_data"
 }
 
 # Função para gerar CPF anonimizado
@@ -79,17 +120,20 @@ check_database() {
 # Criar backup antes da anonimização
 create_backup() {
     local backup_file="$BACKUP_DIR/users_backup_$DATE_STAMP.db"
-    
+
     log "INFO" "Criando backup do banco de dados..."
-    
+    log_operation "BACKUP" "STARTED" "Criando backup antes da anonimização" 0 0
+
     if cp "$DB_PATH" "$backup_file"; then
         log "INFO" "Backup criado com sucesso: $backup_file"
-        
+        log_operation "BACKUP" "COMPLETED" "Backup criado: $backup_file" 0 0
+
         # Manter apenas os últimos 10 backups
         find "$BACKUP_DIR" -name "users_backup_*.db" -type f | sort -r | tail -n +11 | xargs rm -f
         log "INFO" "Backups antigos removidos (mantendo últimos 10)"
     else
         log "ERROR" "Falha ao criar backup"
+        log_operation "BACKUP" "FAILED" "Falha ao criar backup do banco de dados" 0 0
         exit 1
     fi
 }
@@ -104,15 +148,18 @@ count_records() {
 # Executar anonimização
 anonymize_data() {
     log "INFO" "Iniciando processo de anonimização..."
-    
+    log_operation "ANONYMIZATION" "STARTED" "Iniciando anonimização de dados PII" 0 0
+
+    local start_time=$(date +%s)
     local total_records
     total_records=$(count_records)
-    
+
     if [[ $total_records -eq 0 ]]; then
         log "INFO" "Nenhum registro não-anonimizado encontrado"
+        log_operation "ANONYMIZATION" "COMPLETED" "Nenhum registro para anonimizar" 0 0
         return 0
     fi
-    
+
     log "INFO" "Encontrados $total_records registros para anonimizar"
     
     # Buscar IDs dos usuários não anonimizados
@@ -153,8 +200,13 @@ anonymize_data() {
             fi
         fi
     done <<< "$user_ids"
-    
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+    local duration_ms=$((duration * 1000))
+
     log "INFO" "Anonimização concluída: $anonymized_count registros processados"
+    log_operation "ANONYMIZATION" "COMPLETED" "Anonimização concluída com sucesso" "$anonymized_count" "$duration_ms"
 }
 
 # Verificar integridade após anonimização

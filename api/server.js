@@ -7,6 +7,7 @@ const morgan = require("morgan");
 require("dotenv").config();
 
 const userRoutes = require("./routes/users");
+const logRoutes = require("./routes/logs");
 const { initDatabase } = require("./config/database");
 
 const app = express();
@@ -39,6 +40,7 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 initDatabase();
 
 app.use("/api/users", userRoutes);
+app.use("/api/logs", logRoutes);
 
 app.get("/health", (req, res) => {
   res.json({
@@ -53,8 +55,11 @@ app.get("/", (req, res) => {
   res.json({
     message: "ExpertAI API - Sistema de Gerenciamento de Usuários",
     version: "1.0.0",
-    docs: "/api/users",
-    health: "/health",
+    endpoints: {
+      users: "/api/users",
+      logs: "/api/logs",
+      health: "/health",
+    },
   });
 });
 
